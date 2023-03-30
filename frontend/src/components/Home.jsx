@@ -1,9 +1,17 @@
 import React from 'react'
-
+import Header from './Header'
+import Body from './Body'
+import Footer from './Footer'
 function Home() {
   return (
     <div>
-      <h1 className='underline font-bold text-3xl'>Hello Devo its now working!!!!!!</h1>
+
+    
+
+      <Header />
+      <Body />
+      <Footer />
+
     </div>
   )
 }

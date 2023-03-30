@@ -1,0 +1,23 @@
+.bg{
+    background-color: rgb(153,177,149);
+    @apply border-gray-500 border-2 font-bold
+}
+.btn{
+    background-color: rgb(153,177,149);
+    @apply px-8 py-3 mt-44 font-bold text-2xl
+}
+.btn2{
+    background-color: rgb(52,100,42)  
+}
+.footer{
+    background-color: rgb(153,177,149);
+}
+.social{
+    background-color: rgb(153,177,149);
+    @apply flex gap-2 pt-3 ;
+}
+.icons{
+    background-color: black;
+    color:rgb(153,177,149);
+    @apply rounded-full
+}
