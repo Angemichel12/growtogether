@@ -5,9 +5,13 @@ import Footer from './Footer'
 function Home() {
   return (
     <div>
+
+    
+
       <Header />
       <Body />
       <Footer />
+
     </div>
   )
 }
