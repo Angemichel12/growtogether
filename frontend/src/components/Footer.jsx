@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <div>
       <footer className='flex justify-around p-10 footer flex-wrap'>
-        <div className=''>
+        <div>
             <h3 className='text-3xl'>Quick links</h3>
             <ul className='text-xl '>
                 <li className=' social '>Home</li>
