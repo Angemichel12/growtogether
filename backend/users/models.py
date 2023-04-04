@@ -6,7 +6,8 @@ USER_CHOICES = [
     ('D', 'Doctor'),
     ('W', 'Woman'),
     ('R', 'Receptionist'),
-    ('HR', 'HR')
+    ('HR', 'HR'),
+    ('C', 'Consultator')
 ]
 class User(AbstractUser):
     user_type = models.CharField(max_length=3, choices=USER_CHOICES, default='W')
@@ -27,6 +28,11 @@ class User(AbstractUser):
 
     def is_receptionist(self):
         if self.user_type == 'R':
+            return True
+        else:
+            return False
+    def is_consultator(self):
+        if self.user_type == 'C':
             return True
         else:
             return False

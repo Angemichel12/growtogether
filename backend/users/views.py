@@ -3,7 +3,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from .serializers import UserRegisterSerializer
 from rest_framework.views import APIView
-from shortcuts.auto_generate import auto_username_password_generator
+from auto_tasks.auto_generate import auto_username_password_generator
 from .tasks import send_register_email
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)
