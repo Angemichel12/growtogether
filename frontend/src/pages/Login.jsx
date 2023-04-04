@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     return (
@@ -16,7 +17,7 @@ const Login = () => {
                 <label>Password</label><br/>
                 <input type="password" required  className=" rounded-md w-32"/><br/>
 
-                <button className="bg-green-900 rounded-md">Login</button>
+              <Link to="/Umubyeyidash"> <button className="bg-green-900 rounded-md">Login</button></Link> 
             </form>
             </div>
             <div>

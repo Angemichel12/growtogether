@@ -1,6 +1,6 @@
 .bg{
     background-color: rgb(153,177,149);
-    @apply border-gray-500 border-2 font-bold
+    @apply border-gray-500 font-bold
 }
 .btn{
     background-color: rgb(153,177,149);
@@ -27,4 +27,10 @@
         background-repeat: no-repeat;
         background-position: center;
         @apply h-screen opacity-95
+}
+.umubyeyi{
+    background-color: rgb(76,88,74);
+}
+.umubyeyidash{
+    background-color: rgb(153,177,149);
 }

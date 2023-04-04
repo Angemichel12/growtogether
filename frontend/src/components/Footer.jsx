@@ -1,9 +1,9 @@
 import React from 'react'
-// import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/facebook';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 const Footer = () => {
   return (
     <div>
-      <footer className='flex justify-around p-10 footer'>
+      <footer className='flex justify-around p-10 footer flex-wrap'>
         <div>
             <h3 className='text-3xl'>Quick links</h3>
             <ul className='text-xl '>
@@ -23,9 +23,9 @@ const Footer = () => {
         <div>
         <h3  className='text-3xl'>Social Media</h3>
             <ul className='text-xl '>
-                <li className=' social '>{/* <FaInstagram className='icons' />*/}Instagram</li> 
-                <li className=' social'>{/*<FaTwitter className='icons' />*/}Twitter</li>
-                <li className=' social'>{/*<FaFacebook className='icons' />*/}FaceBook</li>
+                <li className=' social '><FaInstagram className='icons' />Instagram</li>
+                <li className=' social'><FaTwitter className='icons' />Twitter</li>
+                <li className=' social'><FaFacebook className='icons' />FaceBook</li>
             </ul>
         </div>
         <div>
