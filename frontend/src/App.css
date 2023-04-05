@@ -28,6 +28,27 @@
         background-position: center;
         @apply h-screen opacity-95
 }
+.login button{
+align-items: center;
+}
+
+/* @media only screen and (min-width: 1024px) and (min-height: 600px) {
+    form{width: fit-content;
+
+    }
+  }
+  
+  
+@media only screen and (max-width: 1024px) and (max-height: 600px) {
+   form{
+       width:fit-content;
+   }
+  } */
+  
+  
+  
+  
+  
 .umubyeyi{
     background-color: rgb(76,88,74);
 }
