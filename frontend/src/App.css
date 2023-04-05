@@ -34,3 +34,60 @@
 .umubyeyidash{
     background-color: rgb(153,177,149);
 }
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: rgb(52,100,42) ;
+    color: white;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    right: -75%;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  .doctornav{
+    background-color: rgb(217,217,217);
+    @apply flex py-8 justify-around text-xl;
+  }
+  .healbtn{
+    background-color: rgb(52,100,42) ;
+  }
+  .setone{
+    color: rgb(174,194,171);
+  }
+  .healthlog{
+    width: 28%;
+  }
+  .healthbg{ background-color: gray;
+    background-image: url("img/bgg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    @apply h-screen opacity-95
+}
