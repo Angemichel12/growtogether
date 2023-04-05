@@ -1,7 +1,11 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+import { Link } from 'react-router-dom';
+
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -68,12 +72,12 @@ const Login = () => {
          onChange={handleCheckboxChange} />
          <label for="terms" className=" text-xs"> I agree to Terms and contitions</label><br/><br/>
          <div className="border w-28 mx-auto">
-            <button 
+         <Link to="/Umubyeyidash" >  <button 
             disabled={!isChecked} 
             onClick={handleLoginClick} 
             className="bg-green-800 border-2 rounded-3xl content-center px-4 w-28">
                 Login
-            </button>
+            </button></Link>
         </div>
         </form>
             </div>
