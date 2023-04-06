@@ -97,7 +97,7 @@ align-items: center;
     @apply flex py-8 justify-around text-xl;
   }
   .healbtn{
-    background-color: rgb(52,100,42) ;
+    background-color: rgb(153, 177, 149) ;
   }
   .setone{
     color: rgb(174,194,171);
