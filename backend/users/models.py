@@ -13,7 +13,7 @@ class User(AbstractUser):
     user_type = models.CharField(max_length=3, choices=USER_CHOICES, default='W')
     birthdate = models.DateField(null= True)
     phone = models.CharField(max_length=12, null=True) 
-    is_email_verified = models.BooleanField(default=False)
+    is_email_verified = models.BooleanField(default=False, blank=True)
     forget_password_token = models.CharField(max_length=200, null=True, blank=True)
     
     def is_doctor(self):

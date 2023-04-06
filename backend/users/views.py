@@ -7,11 +7,13 @@ from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 import jwt
+from django.contrib.auth.hashers import check_password
 
 from rest_framework.response import Response
 from rest_framework import permissions, status, generics
 from rest_framework.views import APIView
 from auto_tasks.auto_generate import auto_username_password_generator
+from .models import User
 
 UserModel= get_user_model()
 
@@ -23,13 +25,15 @@ class UserRegister(APIView):
         clean_data = auto_username_password_generator(request.data)
         serializer = UserRegisterSerializer(data=clean_data)
         if serializer.is_valid(raise_exception=True):
-            user = serializer.create(clean_data)
+            # user = serializer.create(clean_data)
+            user = serializer.save()
+            
             if user:
                 token= RefreshToken.for_user(user).access_token 
                 current_site= get_current_site(request).domain 
                 rela_link= reverse('email-verify')        
                 abs_url= 'http://'+current_site +rela_link+'?token='+str(token)
-                email_body= 'Hello '+ user.first_name+'.\n\nYour Account has been Created Successfully!\n\nUse the link provided below to Verify your account.\n'+ abs_url
+                email_body= 'Hello '+ user.first_name+'.\n\nYour Account has been Created Successfully!\n\nUse the link provided below to activate your account.\n'+ abs_url
                 data= {
                     'email_body': email_body,
                     'to_email': user.email,
@@ -43,12 +47,19 @@ class VerifyAccount(generics.GenericAPIView):
     def get(self, request):
         token= request.GET.get('token')
         try:
-            payload= jwt.decode(token, settings.SECRET_KEY)
-            user= UserModel.objects.get(id=payload['user_id'])
+            payload= jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+            user= User.objects.get(id=payload['user_id'])
             if not user.is_email_verified:
                 user.is_email_verified= True
                 user.save()
-            return Response({'email': 'Account is successfully activated!'}, status= status.HTTP_200_OK)
+                
+                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\nClick on the link and Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+user.password
+                data= {
+                    'email_body': email_body,
+                    'to_email': user.email,
+                    'email_subject': 'Login into your Growtogether account.'}
+                Util.send_email(data)                
+            return Response({'Email is Verified': 'Your Account is successfully activated!'}, status= status.HTTP_200_OK)
         
         except jwt.ExpiredSignatureError as identifier:
             return Response({'Its an Error':'Activation link expired!'}, status= status.HTTP_400_BAD_REQUEST)
@@ -72,7 +83,7 @@ class ChangePasswordAPI(generics.UpdateAPIView):
             if not self.object.check_password(serializer.data.get('old_password')):
                 return Response({'old_password': ['Old Password is Wrong!'] }, status= status.HTTP_400_BAD_REQUEST)           
            
-            if not serializer.data.get('confirm_newpassword')==serializer.data.get('new_password'):
+            if self.object.check_password(serializer.data.get('newpassword')):
                 return Response({'Confirm_password': ['Failed to confirm new password!'] }, status= status.HTTP_400_BAD_REQUEST)           
             
             self.object.set_password(serializer.data.get('new_password'))   
