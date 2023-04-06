@@ -8,15 +8,18 @@ const HealthRegist = () => {
       <DoctorNav />
       <body className=''>
         <div className="flex justify-center bg-black pt-8 h-screen">
-        <content className="flex justify-center flex-col items-center bg-white healthlog rounded-3xl h-4/5">
-            <p className='text-4xl mb-6 font-bold'>Register A Parent</p>
-            <form className='flex flex-col'>
-                <label className='font-bold text-lg'>Enter Your Employment Id</label>
-                <input type='text' className='border-black border p-2 rounded-xl mb-4'></input>
-                <label className='font-bold text-lg'>Password</label>
-                <input type='text' className='border-black border p-2 rounded-xl mb-4 font-bold'></input>
-                <span className='underline'>Forget Password? <span className='setone'>Set One</span></span>
-                <Link to=""><button className='healbtn my-8 mx-16 rounded-2xl text-lg text-white px-5 py-2'>LOGIN</button></Link> 
+        <content className="flex  flex-col items-center bg-white healthlog rounded-3xl h-4/5 p-8">
+            <p className='text-4xl mb-16 font-bold py-4'>REGISTER A PARENT</p>
+            <form className=''>
+                <label className='font-bold text-lg'>Names</label>
+                <input type='text' className='border-black border p-2  mb-4 mx-16'></input><br/>
+                <label className='font-bold text-lg'>Birth Year</label>
+                <input type='text' className='border-black border p-2  mb-4 mx-10'></input><br/>
+                <label className='font-bold text-lg'>Email</label>
+                <input type='text' className='border-black border p-2 mb-4 mx-20'></input><br/>
+                <label className='font-bold text-lg'>Telephone</label>
+                <input type='text' className='border-black border p-2 w-52 mb-4 font-bold mx-10 mr-4'></input><br/>
+                <Link to=""><button className='healbtn my-12 mx-24 rounded-md text-lg border border-black text-white px-5 py-2 '>Register</button></Link> 
             </form>
         </content>
         </div>
