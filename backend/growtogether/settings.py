@@ -32,8 +32,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'rest_framework',
-    'django_celery_results',
-    'celery',
 ]
 
 MIDDLEWARE = [
@@ -118,20 +116,27 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK= {
+    # 'DEFAULT_PERMISSION_CLASSES':[],
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'),
+}
+
+
 AUTH_USER_MODEL = 'users.User'
 
-# Celery Settings
-
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'django-db'
-
 # Email settings
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'classmate2k20@gmail.com'
-EMAIL_HOST_PASSWORD = 'kxvkwznjsgddoqff'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+
+EMAIL_USE_TLS= True
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_PORT= 587
+EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
+# EMAIL_HOST_USER = 
+# EMAIL_HOST_PASSWORD = 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
