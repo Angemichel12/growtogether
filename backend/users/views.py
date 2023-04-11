@@ -27,31 +27,35 @@ def activate(request, uidb64, token):
 		print("Not successful activated")
 
 
-def activateEmail(request, user, to_email):
-	mail_subject = "Activate your user account."
-	message = render_to_string("template_activate_account",{
-		'user':user.username,
-		'domain':get_current_site(request).domain,
-		'uid': urlsafe_base64_encode(force_bytes(user.id)),
-		'token':account_activation_token.make_token(user),
-		'protocal':'https' if request.is_secure else 'http'
-	})
-	email = EmailMessage(mail_subject, message, to=[to_email])
-	if email.send():
-		print("message send successfull")
-	else:
-		print("Not successfull")
+def activateEmail(request, user):
+    current_site = get_current_site(request)
+    mail_subject = "Activate your user account."
+    message = render_to_string('template_activate_account.html', {
+        'user': user.username,
+        'domain': current_site.domain,
+        'uid': urlsafe_base64_encode(str(user.pk).encode('utf-8')),
+        'token': account_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http',
+    })
+    to_email=user.email
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+        print("message send successfull")
+    else:
+        print("Not successfull")
+
 		
 class UserRegister(APIView):
-	permission_classes = (permissions.AllowAny,)
-	def post(self, request):
-		clean_data = auto_username_password_generator(request.data)
-		serializer = UserRegisterSerializer(data=clean_data)
-		if serializer.is_valid(raise_exception=True):
-			user = serializer.create(clean_data)
-			user.is_active = False
-			user.save()
-			activateEmail(request, clean_data, clean_data.get('email'))
-			if user:
-				return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(status=status.HTTP_400_BAD_REQUEST)
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        clean_data = auto_username_password_generator(request.data)
+        serializer = UserRegisterSerializer(data=clean_data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.create(clean_data)
+            user.is_active = False
+            user.save()
+            activateEmail(request, user)  # pass user object as argument
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
