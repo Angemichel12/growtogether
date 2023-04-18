@@ -8,6 +8,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 import jwt
+from knox.models import AuthToken
 
 from rest_framework.response import Response
 from rest_framework import permissions, status, generics, viewsets
@@ -37,6 +38,7 @@ class UserRegister(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             # user = serializer.create(clean_data)
             user = serializer.save()
+            AuthToken.objects.create(user)[1]
             
             if user:
                 token= RefreshToken.for_user(user).access_token 
@@ -102,7 +104,18 @@ class LoginApi(APIView):
         content= {'user': str(request.user), 'auth':str(request.auth)}
         return Response(data= content, status= status.HTTP_200_OK)
     
-  
+class LogoutApi(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes= [TokenAuthentication]
+    
+    def get(self, request):
+        content= {'user': str(request.user), 'auth':str(request.auth)}
+        return Response(data= content, status= status.HTTP_200_OK)
+        
+    def post(self, request, format=None):
+        request.auth.delete()
+        return Response(data= {'Message':'User Logged out'})
+    
     
        
         
