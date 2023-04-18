@@ -32,6 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'rest_framework',
+    'drf_yasg',
+    # 'rest_framework.authtoken',
+    'knox'
 ]
 
 MIDDLEWARE = [
@@ -106,6 +109,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -123,7 +128,10 @@ REST_FRAMEWORK= {
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication'),
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'knox.auth.TokenAuthentication',
+    )
 }
 
 
@@ -136,7 +144,6 @@ EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT= 587
 EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
-# EMAIL_HOST_USER = 
-# EMAIL_HOST_PASSWORD = 
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
