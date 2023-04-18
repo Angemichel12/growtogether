@@ -1,9 +1,9 @@
 import React from 'react'
 import { FaBell, FaCalendar, FaRocketchat, FaUserAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import prof from '../img/profile.png'
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import prof from '../../img/profile.png'
 const UmuSchedule = () => {
     return (
         <div>

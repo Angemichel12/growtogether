@@ -1,13 +1,17 @@
 import { Routes, Route } from "react-router-dom"
 import './App.css';
 import Home from './components/Home.jsx'
-import Login from "./pages/Login";
-import Umubyeyidash from "./pages/Umubyeyidash";
-import UmuMessage from "./pages/UmuMessage";
-import UmuSchedule from "./pages/UmuSchedule";
-import HealthLogin from "./pages/HealthLogin";
-import HealthHome from "./pages/HealthHome";
-import HealthRegist from "./pages/HealthRegist";
+import Login from "./pages/Parent/Login";
+import Umubyeyidash from "./pages/Parent/Umubyeyidash";
+import UmuMessage from "./pages/Parent/UmuMessage";
+import UmuSchedule from "./pages/Parent/UmuSchedule";
+import HealthLogin from "./pages/Healthcare/HealthLogin";
+import HealthHome from "./pages/Healthcare/HealthHome";
+import HealthRegist from "./pages/Healthcare/HealthRegist";
+import Parentlist from "./pages/Healthcare/Parentlist";
+import Message from "./pages/Healthcare/Message";
+import Appointmentlist from "./pages/Healthcare/Appointmentlist";
+import Contactus from "./pages/Parent/Contactus";
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
         <Route path="/healthlogin" element={<HealthLogin/>}/>
         <Route path="/healthhome" element={<HealthHome/>}/>
         <Route path="/healthregist" element={<HealthRegist/>}/>
+        <Route path="/parentlist" element={<Parentlist/>}/>
+        <Route path="/message" element={<Message/>}/>
+        <Route path="/appointmentlist" element={<Appointmentlist/>}/>
+        <Route path="/contactus" element={<Contactus/>}/>
       </Routes>
     </div>
   );

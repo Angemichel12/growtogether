@@ -1,5 +1,5 @@
 import React from 'react'
-import DoctorNav from '../components/DoctorNav'
+import DoctorNav from '../../components/DoctorNav'
 import TypeWriterEffect from 'react-typewriter-effect';
 const HealthHome = () => {
     return (
