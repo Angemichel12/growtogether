@@ -19,6 +19,7 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from rest_framework.authtoken.views import obtain_auth_token
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -34,10 +35,13 @@ schema_view = get_schema_view(
    authentication_classes=[]
 )
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),  
     path('', include('users.urls')),
+    path('auth/', obtain_auth_token),
     
     # swagger paths[ practice on how to document an API]
     path('swagger.json/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
