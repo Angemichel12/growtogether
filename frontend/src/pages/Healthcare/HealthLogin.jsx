@@ -1,5 +1,5 @@
 import React from 'react'
-import DoctorNav from '../components/DoctorNav'
+import DoctorNav from '../../components/DoctorNav'
 import { Link } from 'react-router-dom'
 const HealthLogin = () => {
   return (
@@ -16,6 +16,7 @@ const HealthLogin = () => {
                 <input type='text' className='border-black border p-2 rounded-xl mb-4 font-bold'></input>
                 <span className='underline'>Forget Password? <span className='setone'>Set One</span></span>
                 <Link to="/HealthHome"><button className='healbtn my-8 mx-16 rounded-2xl text-lg text-white px-5 py-2'>LOGIN</button></Link> 
+                <p className='font-bold'>Don't have account? <span className='text-green-700 underline'>SIGN UP</span></p>
             </form>
         </content>
         </div>

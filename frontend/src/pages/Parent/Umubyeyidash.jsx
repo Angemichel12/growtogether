@@ -1,11 +1,11 @@
 import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import im1 from '../img/welcome1.png'
-import im2 from '../img/welcome2.png'
-import im3 from '../img/welcome3.png'
-import im4 from '../img/welcome4.png'
-import prof from '../img/profile.png'
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import im1 from '../../img/welcome1.png'
+import im2 from '../../img/welcome2.png'
+import im3 from '../../img/welcome3.png'
+import im4 from '../../img/welcome4.png'
+import prof from '../../img/profile.png'
 import { FaBell, FaCalendar, FaRocketchat, FaUserAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
 

@@ -6,11 +6,12 @@ const DoctorNav = () => {
     <div>
       <nav>
         <ul className='doctornav'>
-            <li>Parent List</li>
-            <Link to="/HealthRegist"> <li>Registering Parent</li></Link>
-            <li>Messages</li>
-            <li>Appointment list</li>
-            <li>Schedule</li>
+        <Link to="/Parentlist"><li>Parent List</li> </Link>
+          <Link to="/HealthRegist">
+          <li>Registering Parent</li></Link>
+          <Link to="/Message"><li>Messages</li></Link>
+          <Link to="/Appointmentlist"><li>Appointment list</li></Link>
+          <li>Schedule</li>
         </ul>
       </nav>
     </div>

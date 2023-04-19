@@ -31,24 +31,7 @@
 .login button{
 align-items: center;
 }
-
-/* @media only screen and (min-width: 1024px) and (min-height: 600px) {
-    form{width: fit-content;
-
-    }
-  }
-  
-  
-@media only screen and (max-width: 1024px) and (max-height: 600px) {
-   form{
-       width:fit-content;
-   }
-  } */
-  
-  
-  
-  
-  
+ 
 .umubyeyi{
     background-color: rgb(76,88,74);
 }
@@ -97,7 +80,7 @@ align-items: center;
     @apply flex py-8 justify-around text-xl;
   }
   .healbtn{
-    background-color: rgb(153, 177, 149) ;
+    background-color: rgb(52,100,42) ;
   }
   .setone{
     color: rgb(174,194,171);
@@ -111,4 +94,7 @@ align-items: center;
     background-repeat: no-repeat;
     background-position: center;
     @apply h-screen opacity-95
+}
+.secp{
+  color: rgb(174,194,171);
 }
