@@ -53,3 +53,4 @@ def auto_username_password_generator(data):
     del data["full_name"]
     
     return data
+

@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import UserRegister, activate
+from .views import UserRegistrationAPIView,ReadUserList
+
 
 urlpatterns = [
-    path('register/', UserRegister.as_view()),
-    path('activate/<uidb64>/<token>', activate, name='activate'),
+    path('', ReadUserList.as_view(), name='Users'),
+    path('register/',UserRegistrationAPIView.as_view(), name='register'),
 ]
