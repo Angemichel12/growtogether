@@ -17,18 +17,18 @@ const Body = () => {
                 backgroundPosition: 'center',
                 opacity: '2'
             }} className='h-screen opacity-95'>
-                <content className='flex justify-center items-center flex-col pt-20'>
-                    <p className='text-center lg:text-6xl md:text-4xl sm:text-3xl text-white w-auto'>Welcome to our <span className='font-bold'>GROW2GETHER</span> team !!</p>
-                    <p className='text-center pt-2 mt-3 lg:text-4xl md:text-2xl sm:text-xl text-white'>You Will Meet Health Professionals Who Will Help You</p>
-                    <section className='flex justify-center items-center w-3/5 secp mt-20'>
-                        <p className='text-2xl text-justify  justify-center items-center flex'>
+                <content className='flex items-center flex-col pt-20'>
+                    <p className='text-center lg:text-6xl md:text-4xl sm:text-3xl text-white w-auto atherfont'>Welcome to our <span className='font-bold'>GROW2GETHER</span> team !!</p>
+                    <p className='text-center pt-2 mt-3 lg:text-4xl md:text-2xl sm:text-xl text-white seco'>You Will Meet Health Professionals Who Will Help You</p>
+                    <section className='flex justify-start w-full text-white mt-20 px-72'>
+                        <p className='text-3xl text-justify w-2/5 secp font-link  justify-start  flex'>
                         We Provide the platform that helps a pregnant woman to get a day to day update on her baby by connecting her to the doctor that will keep guiding her till birth and care on baby born as well.
                         </p>
                     </section>
                 </content>
 
                 <div class="dropdown flex  justify-end lg:mr-32 md:mr-20 sm:mr-16 lg:mt-2 sm:mt-6 md:mt-2">
-                    <button className="dropbtn px-6 py-2 font-bold text-3xl  flex gap-2 rounded-3xl text-white shadow-xl shadow-black border-b border-white">Continue <FaAngleRight /> </button>
+                    <button className="dropbtn px-6 py-2 font-bold text-3xl  flex gap-2 rounded-3xl shadow-xl shadow-black border-b border-white">Continue <FaAngleRight /> </button>
                     <div className="dropdown-content rounded-lg text-xl font-bold">
                         <Link to="/HealthLogin" className="rounded-lg">As a Health Care</Link>
                         <Link to="/login" className="rounded-lg">As a Parent</Link>
