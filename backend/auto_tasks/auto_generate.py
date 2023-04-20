@@ -33,9 +33,9 @@ def generate_id():
 
 def generate_username():
     current_year = str(date.today().year)[2:4]
-    current_manth = month_names.get(date.today().month)
+    current_month = month_names.get(date.today().month)
     count = generate_id()
-    return f'{current_year}{current_manth}{count}'
+    return f'{current_year}{current_month}{count}'
 
 def auto_username_password_generator(data):
     names = data['full_name'].split(' ')
