@@ -17,11 +17,10 @@ month_names = {
     12: "DEC"
 }
 
-def generate_password(length=10, characters = string.ascii_letters + string.digits):
+def generate_password(first_name):
     
-    password_characters = random.sample(characters, length)
-    password = ''.join(password_characters)
-    return password
+   
+    return f'{first_name}@{date.today().year}'
 
 
 counter = 0
@@ -49,7 +48,7 @@ def auto_username_password_generator(data):
     data["first_name"] = first_name
     data["last_name"] = last_name
     data["username"] = generate_username()
-    data["password"] = generate_password()
+    data["password"] = generate_password(first_name)
     del data["full_name"]
     
     return data
