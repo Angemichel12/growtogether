@@ -8,7 +8,6 @@ from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 import jwt
-from knox.models import AuthToken
 
 from rest_framework.response import Response
 from rest_framework import permissions, status, generics, viewsets
@@ -17,12 +16,15 @@ from auto_tasks.auto_generate import auto_username_password_generator
 from .models import User
 
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.hashers import check_password
+
 # pindo 
 from lib.pindo import send_sms
 
 UserModel= get_user_model()
 
 # Create your views here.
+
 
 class UserRegister(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny, IsAuthenticated]
@@ -38,7 +40,7 @@ class UserRegister(viewsets.ViewSet):
         if serializer.is_valid(raise_exception=True):
             # user = serializer.create(clean_data)
             user = serializer.save()
-            AuthToken.objects.create(user)[1]
+            # Token.objects.get_or_create(user)[1]
             
             if user:
                 token= RefreshToken.for_user(user).access_token 
@@ -50,8 +52,9 @@ class UserRegister(viewsets.ViewSet):
                     'email_body': email_body,
                     'to_email': user.email,
                     'email_subject': 'Activate Your Account on Growtogether system.'}
-                Util.send_email(data)                                                    
-                return Response(serializer.data, status=status.HTTP_201_CREATED)                            
+                Util.send_email(data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED) 
+        
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
     
@@ -64,7 +67,7 @@ class VerifyAccount(generics.GenericAPIView):
             if not user.is_email_verified:
                 user.is_email_verified= True                             
                 user.save()
-                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\nClick on the link and Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+user.password
+                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\n Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+user.password
                 data= {
                     'email_body': email_body,
                     'to_email': user.email,
@@ -119,7 +122,7 @@ class LogoutApi(APIView):
     
        
         
-class ChangePasswordAPI(generics.UpdateAPIView):
+class ChangePasswordApi(generics.UpdateAPIView):
     model= UserModel
     serializer_class= ChangePasswordSerializer
     permission_classes= [IsAuthenticated, ]    
@@ -144,4 +147,13 @@ class ChangePasswordAPI(generics.UpdateAPIView):
             return Response(serializer.data, status= status.HTTP_200_OK)
         return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
     
-    
+
+# class RequestPasswordReset(generics.GenericAPIView):
+#     serializer_class= RequestPasswordResetSerializer
+#     def post(self, request):
+#         serializer= self.serializer_class(data= request.data)
+#          serializer.is_valid(raise_exception= True)
+         
+        
+class ResetPasswordApi(APIView):
+    pass
