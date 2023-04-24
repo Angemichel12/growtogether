@@ -1,13 +1,31 @@
-import React from 'react'
-import DoctorNav from '../../components/DoctorNav'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import { Link } from 'react-router-dom';
 import prof from '../../img/profile.png'
+
 const Message = () => {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <div>
-            <DoctorNav />
-            <body className=''>
-                <div className="flex justify-center pt-8 h-screen healthbg">
-                    <content className="flex  bg-white h-auto w-11/12 mb-8 p-12">
+            <Link onClick={handleOpen}>Message</Link>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="parent-modal-title"
+                aria-describedby="parent-modal-description"
+            >
+                <Box className="mt-32 w-auto ">
+
+                <div className="flex  pt-8 h-auto justify-center">
+                    <content className="flex  bg-white h-auto w-11/12 mb-8 py-6">
                         <aside className='w-4/12'>
                             <div className='bg-gray-300 m-4 rounded-lg flex gap-4'>
                                 <img src={prof} alt='profile' className='rounded-full w-20 h-20 p-4' />
@@ -30,9 +48,9 @@ const Message = () => {
                         <content></content>
                     </content>
                 </div>
-            </body>
+                </Box>
+            </Modal>
         </div>
-    )
+    );
 }
-
-export default Message
+export default  Message;
