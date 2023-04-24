@@ -16,10 +16,6 @@ from auto_tasks.auto_generate import auto_username_password_generator
 from .models import User
 
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.hashers import check_password
-
-# pindo 
-from lib.pindo import send_sms
 
 UserModel= get_user_model()
 
@@ -35,45 +31,56 @@ class UserRegister(viewsets.ViewSet):
         return Response(serializer.data)
         
     def post(self, request):
-        clean_data = auto_username_password_generator(request.data)
-        serializer = UserRegisterSerializer(data=clean_data)
-        if serializer.is_valid(raise_exception=True):
-            # user = serializer.create(clean_data)
-            user = serializer.save()
-            # Token.objects.get_or_create(user)[1]
-            
-            if user:
-                token= RefreshToken.for_user(user).access_token 
-                current_site= get_current_site(request).domain 
-                rela_link= reverse('email-verify')        
-                abs_url= 'http://'+current_site +rela_link+'?token='+str(token)
-                email_body= 'Hello '+ user.first_name+'.\n\nYour Account has been Created Successfully!\n\nUse the link provided below to activate your account.\n'+ abs_url
-                data= {
-                    'email_body': email_body,
-                    'to_email': user.email,
-                    'email_subject': 'Activate Your Account on Growtogether system.'}
-                Util.send_email(data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED) 
-        
+        if User.is_receptionist or User.is_HR:
+                        
+            clean_data = auto_username_password_generator(request.data)
+            serializer = UserRegisterSerializer(data=clean_data)
+            if serializer.is_valid(raise_exception=True):
+                # user = serializer.create(clean_data)
+                user = serializer.save()
+                # Token.objects.get_or_create(user)[1]
+                
+                if user:
+                    token= RefreshToken.for_user(user).access_token 
+                    current_site= get_current_site(request).domain 
+                    rela_link= reverse('email-verify')        
+                    abs_url= 'http://'+current_site +rela_link+'?token='+str(token)
+                    email_body= 'Hello '+ user.first_name+'.\n\nYour Account has been Created Successfully!\n\nUse the link provided below to activate your account.\n'+ abs_url
+                    data= {
+                        'email_body': email_body,
+                        'to_email': user.email,
+                        'email_subject': 'Activate Your Account on Growtogether system.'}
+                    Util.send_email(data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED) 
+        else:
+            return Response({'Error':'You are not Staff user'})
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
     
 class VerifyAccount(generics.GenericAPIView):
     def get(self, request):
-        token= request.GET.get('token')
+        token= request.GET.get('token') 
+        
         try:
             payload= jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
             user= User.objects.get(id=payload['user_id'])
+            encryptedpassword=request.GET.get('password')
+            
             if not user.is_email_verified:
                 user.is_email_verified= True                             
                 user.save()
-                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\n Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+user.password
+                
+                current_site= get_current_site(request).domain 
+                rela_link= reverse('login')        
+                abs_url= 'http://'+current_site +rela_link
+                
+                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\n Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+ request.user.password+ '\n\nLogin Link:\n'+ abs_url
                 data= {
                     'email_body': email_body,
                     'to_email': user.email,
                     'email_subject': 'Login into your Growtogether account.'}
                 Util.send_email(data)
-                send_sms(request, user.phone)                
+                # send_sms(request, user.phone)                
             return Response({'Email is Verified': 'Your Account is successfully activated!'}, status= status.HTTP_200_OK)
         
         except jwt.ExpiredSignatureError as identifier:
@@ -119,8 +126,6 @@ class LogoutApi(APIView):
         request.auth.delete()
         return Response(data= {'Message':'User Logged out'})
     
-    
-       
         
 class ChangePasswordApi(generics.UpdateAPIView):
     model= UserModel
@@ -146,13 +151,7 @@ class ChangePasswordApi(generics.UpdateAPIView):
             self.object.save() 
             return Response(serializer.data, status= status.HTTP_200_OK)
         return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
-    
 
-# class RequestPasswordReset(generics.GenericAPIView):
-#     serializer_class= RequestPasswordResetSerializer
-#     def post(self, request):
-#         serializer= self.serializer_class(data= request.data)
-#          serializer.is_valid(raise_exception= True)
          
         
 class ResetPasswordApi(APIView):

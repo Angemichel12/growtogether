@@ -14,7 +14,7 @@ urlpatterns = [
     path('login/', LoginApi.as_view(), name='login'),
     path('logout/', LogoutApi.as_view(), name='logout'),    
     
-    #change password not working on confirming passwd      
+    #changing password not working on confirming passwd field      
     path('changepassword/', ChangePasswordApi.as_view(), name='changepassword'),
     path('resetpassword/', ResetPasswordApi.as_view(), name='resetpassword'),
     
