@@ -24,8 +24,8 @@ const Message = () => {
             >
                 <Box className="mt-32 w-auto ">
 
-                <div className="flex justify-center pt-8 h-auto">
-                    <content className="flex  bg-white h-auto w-11/12 mb-8 p-12">
+                <div className="flex  pt-8 h-auto justify-center">
+                    <content className="flex  bg-white h-auto w-11/12 mb-8 py-6">
                         <aside className='w-4/12'>
                             <div className='bg-gray-300 m-4 rounded-lg flex gap-4'>
                                 <img src={prof} alt='profile' className='rounded-full w-20 h-20 p-4' />
