@@ -18,11 +18,8 @@ coreschema==0.0.4
 cryptography==40.0.2
 Django==4.1.7
 django-celery-results==2.5.0
-django-phonenumber-field==7.0.2
-django-phonenumbers==1.0.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
-drf-yasg==1.21.5
 idna==3.4
 inflection==0.5.1
 itypes==1.2.0
