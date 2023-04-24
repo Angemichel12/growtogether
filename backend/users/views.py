@@ -8,7 +8,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 import jwt
-
+from datetime import date
 from rest_framework.response import Response
 from rest_framework import permissions, status, generics, viewsets
 from rest_framework.views import APIView
@@ -74,7 +74,7 @@ class VerifyAccount(generics.GenericAPIView):
                 rela_link= reverse('login')        
                 abs_url= 'http://'+current_site +rela_link
                 
-                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\n Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+ request.user.password+ '\n\nLogin Link:\n'+ abs_url
+                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\n Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+ user.first_name+'@'+str(date.today().year) +'\n\nLogin Link:\n'+ abs_url
                 data= {
                     'email_body': email_body,
                     'to_email': user.email,
