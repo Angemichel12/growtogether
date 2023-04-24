@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'appointment',
     'django_celery_results',
     'rest_framework.authtoken',
-
+    'drf_yasg',
+ 
 ]
 
 MIDDLEWARE = [
@@ -110,6 +111,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -132,12 +135,11 @@ REST_FRAMEWORK= {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+
 }
 
 
 AUTH_USER_MODEL = 'users.User'
-
-
 # Email settings
 
 EMAIL_USE_TLS= True
@@ -146,4 +148,5 @@ EMAIL_PORT= 587
 EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 

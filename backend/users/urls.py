@@ -1,15 +1,22 @@
-from django.urls import path
-from rest_framework.authtoken.views import obtain_auth_token
-from .views import UserRegister, VerifyAccount, ChangePasswordAPI
+from django.urls import path, include
+from .views import (UserRegister, VerifyAccount, ChangePasswordApi, LoginApi, LogoutApi, ResetPasswordApi )
+
+from rest_framework.routers import DefaultRouter
+
+
+router= DefaultRouter()
+router.register('users', UserRegister, basename='users')
 
 urlpatterns = [ 
-    path('login/', obtain_auth_token, name='obtain-auth-token'),
-    path('', UserRegister.as_view(), name='registeruser'),
-    path('registeruser/', UserRegister.as_view(), name='registeruser'),
-    path('activate-account/', VerifyAccount.as_view(), name='email-verify'),
-        
-    path('change-password/', ChangePasswordAPI.as_view(), name='changepassword'),
+               
+    path('', include(router.urls)),    
+    path('activateaccount/', VerifyAccount.as_view(), name='email-verify'),
+    path('login/', LoginApi.as_view(), name='login'),
+    path('logout/', LogoutApi.as_view(), name='logout'),    
+    
+    #change password not working on confirming passwd      
+    path('changepassword/', ChangePasswordApi.as_view(), name='changepassword'),
+    path('resetpassword/', ResetPasswordApi.as_view(), name='resetpassword'),
     
     
 ]
-
