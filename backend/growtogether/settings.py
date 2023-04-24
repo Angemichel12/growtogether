@@ -33,8 +33,7 @@ INSTALLED_APPS = [
     'users',
     'rest_framework',
     'drf_yasg',
-    # 'rest_framework.authtoken',
-    'knox'
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -128,9 +127,9 @@ REST_FRAMEWORK= {
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
-        'knox.auth.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+       
     )
 }
 
