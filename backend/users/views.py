@@ -1,7 +1,7 @@
-from .serializers import UserRegisterSerializer, ChangePasswordSerializer
+from .serializers import UserRegisterSerializer, ChangePasswordSerializer, ReadUserSerializer
 from django.contrib.auth import get_user_model, authenticate
 from .utils import Util
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
@@ -23,11 +23,11 @@ UserModel= get_user_model()
 
 
 class UserRegister(viewsets.ViewSet):
-    permission_classes = [permissions.AllowAny, IsAuthenticated]
+    permission_classes = [IsAdminUser, IsAuthenticated]
     
     def list(self, request):
         all_users= User.objects.all()
-        serializer= UserRegisterSerializer(all_users, many= True) 
+        serializer= ReadUserSerializer(all_users, many= True) 
         return Response(serializer.data)
         
     def post(self, request):

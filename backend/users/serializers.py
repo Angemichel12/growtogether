@@ -9,7 +9,7 @@ UserModel = get_user_model()
 class UserRegisterSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UserModel
-		fields = '__all__'
+		fields = ['email','password', 'first_name','birthdate','last_name','phone','username']
 		extra_kwargs = {
 			'is_email_verified': {'read_only': True}
 		}  
@@ -24,6 +24,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                                       birthdate = clean_data['birthdate'],
                                       phone = clean_data['phone'])		  
 		return user_obj
+class ReadUserSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = UserModel
+		fields =['email', 'first_name','last_name']
+		
 
 
 class ChangePasswordSerializer(serializers.Serializer):
