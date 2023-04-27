@@ -80,11 +80,11 @@ class SetNewPasswordSerializer(serializers.Serializer):
             return Response({'user': user})                                      
         except Exception as e: 
             
-            print(f"error: {e} ") 
+            # print(f"error: {e} ") 
             
             raise exceptions.AuthenticationFailed('Reset link is invaliddd', 401)
         
-        return super().validate(attrs)
+        # return super().validate(attrs)
        
             
               
