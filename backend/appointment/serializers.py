@@ -7,3 +7,9 @@ class ReadOnlyAppointmentSerializer(serializers.ModelSerializer):
         model = SemesterAppointment
         fields = ['semester','test_date','utelas_height','children_situation','appointment_date','status','description']
 
+class ReadOnlyCheckupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Checkup
+        fields =('title', 'checkup_date','description','status')
+        
+
