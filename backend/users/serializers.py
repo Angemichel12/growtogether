@@ -1,7 +1,7 @@
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
+from users.models import User
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 
@@ -52,30 +52,39 @@ class RequestResetPasswordSerializer(serializers.Serializer):
         fields= ['email']        
         
 class SetNewPasswordSerializer(serializers.Serializer):
-    newpassword= serializers.CharField(min_length=6, max_length= 64, required=True)
-    uidb64= serializers.CharField(min_length= 1, write_only= True, required=True)
-    token= serializers.CharField(min_length= 1, write_only= True, required=True)
+    newpassword= serializers.CharField(min_length=6, max_length= 64, write_only= True)
+    uidb64= serializers.CharField(min_length= 1, write_only= True )
+    token= serializers.CharField(min_length= 1, write_only= True )
     
     class Meta:
         fields= '__all__'
         
-    def validate(self, request):
+    def validate(self, attrs):
         try:
-            newpassword= request.get('newpassword')
-            uidb64= request.get('uidb64')
-            token= request.get('token')
+            newpassword= attrs.get('newpassword')
+            token= attrs.get('token')
+            uidb64= attrs.get('uidb64') 
+            print(f"token: {token}")
+            print(f"uidb64: {uidb64}")           
             
             id= force_str(urlsafe_base64_decode(uidb64))
-            user= User.objects.get(id)
+            user= UserModel.objects.get(id=id)
+            
+            print(f"User: {user}")
+            
             if not PasswordResetTokenGenerator().check_token(user, token):
-                return Response('Reset link invalid', 401)
+                raise exceptions.AuthenticationFailed('Reset link is invalid', 401)
             
             user.set_password(newpassword)
             user.save()
-        except Exception as e:
-            return Response('Reset link invalid', 401)
-        return super().validate(request)
+            return Response({'user': user})                                      
+        except Exception as e: 
             
+            print(f"error: {e} ") 
             
+            raise exceptions.AuthenticationFailed('Reset link is invaliddd', 401)
+        
+        return super().validate(attrs)
+       
             
               

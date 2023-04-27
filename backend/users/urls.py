@@ -17,9 +17,9 @@ urlpatterns = [
     
     #changing password not working on confirming passwd field      
     path('changepassword/', ChangePasswordApi.as_view(), name='changepassword'),
-    path('request-reset-email/', RequestResetPasswordEmail.as_view(), name='request-reset-email'),
+    path('requestresetemail/', RequestResetPasswordEmail.as_view(), name='request-reset-email'),
     path('resetpassword/<uidb64>/<token>/', PasswordCheckTokenApi.as_view(), name='password-reset-confirm'),
-    path('resetpasswordcomplete/', SetNewPasswordApi.as_view(), name='password-reset-done'),
+    path('resetpassword/', SetNewPasswordApi.as_view(), name='password-reset-done'),
     
     
 ]
