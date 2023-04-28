@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'rest_framework',    
     'rest_framework.authtoken',
     'appointment',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +155,15 @@ EMAIL_HOST_PASSWORD= 'wazpihmpusqqomzy'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+# Celery settings
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
+
+#CELERY BEAT
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
