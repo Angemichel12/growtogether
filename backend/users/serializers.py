@@ -18,7 +18,7 @@ UserModel = get_user_model()
 class UserRegisterSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UserModel
-		fields = '__all__'
+		fields = ['email','password', 'first_name','birthdate','last_name','phone','username']
 		extra_kwargs = {
 			'is_email_verified': {'read_only': True}
 		}  
@@ -33,6 +33,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                                       birthdate = clean_data['birthdate'],
                                       phone = clean_data['phone'])		  
 		return user_obj
+
+class ReadUserSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = UserModel
+		fields =['email', 'first_name','last_name']
+		
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -64,6 +70,7 @@ class SetNewPasswordSerializer(serializers.Serializer):
             newpassword= attrs.get('newpassword')
             token= attrs.get('token')
             uidb64= attrs.get('uidb64') 
+            
             print(f"token: {token}")
             print(f"uidb64: {uidb64}")           
             
@@ -73,18 +80,17 @@ class SetNewPasswordSerializer(serializers.Serializer):
             print(f"User: {user}")
             
             if not PasswordResetTokenGenerator().check_token(user, token):
-                raise exceptions.AuthenticationFailed('Reset link is invalid', 401)
+                raise exceptions.AuthenticationFailed({'Error':'The Reset link is invalid, It was used before!'}, 401)
             
             user.set_password(newpassword)
             user.save()
             return Response({'user': user})                                      
         except Exception as e: 
             
-            # print(f"error: {e} ") 
+            print(f"error: {e} ") 
             
-            raise exceptions.AuthenticationFailed('Reset link is invaliddd', 401)
+            raise exceptions.AuthenticationFailed({'Error':'The Reset link is invalid' }, 401)
         
-        # return super().validate(attrs)
        
             
               

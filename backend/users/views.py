@@ -1,15 +1,16 @@
 from .serializers import (UserRegisterSerializer, ChangePasswordSerializer, RequestResetPasswordSerializer,
-                          SetNewPasswordSerializer)
+                          SetNewPasswordSerializer,ReadUserSerializer )
+
 from django.contrib.auth import get_user_model, authenticate
 from .utils import Util
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.shortcuts import get_current_site
 import jwt
-
+from datetime import date
 from rest_framework.response import Response
 from rest_framework import permissions, status, generics, viewsets
 from rest_framework.views import APIView
@@ -30,11 +31,11 @@ UserModel= get_user_model()
 
 
 class UserRegister(viewsets.ViewSet):
-    permission_classes = [permissions.AllowAny, IsAuthenticated]
+    permission_classes = [IsAdminUser, IsAuthenticated]
     
     def list(self, request):
         all_users= User.objects.all()
-        serializer= UserRegisterSerializer(all_users, many= True) 
+        serializer= ReadUserSerializer(all_users, many= True) 
         return Response(serializer.data)
         
     def post(self, request):
@@ -79,7 +80,7 @@ class VerifyAccount(generics.GenericAPIView):
                 rela_link= reverse('login')        
                 abs_url= 'http://'+current_site +rela_link
                 
-                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\n Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+ request.user.password+ '\n\nLogin Link:\n'+ abs_url
+                email_body= 'Hello '+ user.first_name+'.\n\nYour Account is successfully activated!\n\n Use Credentials provided below to login into your account.\n\n'+'Username: '+user.username+'\nPassword: '+ user.first_name+'@'+str(date.today().year) +'\n\nLogin Link:\n'+ abs_url
                 data= {
                     'email_body': email_body,
                     'to_email': user.email,
@@ -203,7 +204,6 @@ class SetNewPasswordApi(generics.GenericAPIView):
     def patch(self, request):
         serializer= self.serializer_class(data= request.data)
         serializer.is_valid(raise_exception= True)        
-        return Response({'Success': True, 'Message':'Password reset successfully'}, status= status.HTTP_200_OK)
-
-                       
+        return Response({'Success': True, 'Message':'Password reset successfully'}, status= status.HTTP_200_OK)  
+                        
         

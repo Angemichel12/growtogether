@@ -1,6 +1,4 @@
 from pathlib import Path
-from dotenv import load_dotenv
-load_dotenv()
 import os
 
 
@@ -12,14 +10,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'django-insecure-=3_q68zs&2gt%tf%4y+(aav++y98nx9@rgeqcwt*ld9($_!8wv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get('DEBUG', default=1))
+DEBUG = True
 
-PRODUCTION = int(os.environ.get('PRODUCTION', default=0))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','michelnasri.pythonanywhere.com']
 
 
 # Application definition
@@ -34,6 +31,7 @@ INSTALLED_APPS = [
     'users',
     'rest_framework',    
     'rest_framework.authtoken',
+    'appointment',
 ]
 
 MIDDLEWARE = [
@@ -119,8 +117,9 @@ STATIC_URL = '/static/'
 
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
 
+
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -152,8 +151,8 @@ AUTH_USER_MODEL = 'users.User'
 EMAIL_USE_TLS= True
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT= 587
-EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER= 'ndialbert45@gmail.com'
+EMAIL_HOST_PASSWORD= 'vvwutvhyfcuulkum'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
