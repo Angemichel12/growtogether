@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',    
     'rest_framework.authtoken',
     'appointment',
+    'doctor',
     'django_celery_results',
     'django_celery_beat',
 ]
