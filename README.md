@@ -40,8 +40,47 @@ request body:
     "phone": "12312343424"
   },
   "profile_data": {
-    "department": "CL"
+    "department": "OB"
   }
+}
+```
+
+response body:
+
+```json
+{
+  "user_data": {
+    "username": "doctor5",
+    "email": "doctor@gmail.com",
+    "first_name": "Dr. Deal",
+    "last_name": "Walker",
+    "phone": "12312343424"
+  },
+  "profile_data": {
+    "department": "OB"
+  }
+}
+```
+
+**POST api/doctor/login/**
+
+Details: API endpoint for doctor login. Admin needs to approve account otherwise login will not be successful.
+
+request body:
+
+```json
+{
+  "username": "doctor5",
+  "password": "doctoraccess1234"
+}
+```
+
+response body:
+
+```json
+{
+  "Message": "You are login successful",
+  "token": "c8dabcf01492f84f4db5cafc9003388cdc486cb8"
 }
 ```
 
