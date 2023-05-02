@@ -4,6 +4,8 @@ from rest_framework import status
 from .serializers import DoctorRegistrationSerializer,DoctorProfileSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from doctor.models import doctor
+from .permissions import IsDoctor
 
 
 # API endpoint for Doctor Login
@@ -57,4 +59,34 @@ class RegistrationView(APIView):
             return Response({
                 'user_data': registrationSerializer.errors,
                 'profile_data': profileSerializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+class doctorProfileView(APIView):
+    """"API endpoint for doctor profile view/update-- Only accessble by doctors"""
+
+    permission_classes=[IsDoctor]
+
+    def get(self, request, format=None):
+        user = request.user
+        profile = doctor.objects.filter(user=user).get()
+        userSerializer=DoctorRegistrationSerializer(user)
+        profileSerializer = DoctorProfileSerializer(profile)
+        return Response({
+            'user_data':userSerializer.data,
+            'profile_data':profileSerializer.data
+
+        }, status=status.HTTP_200_OK)
+
+    def put(self, request, format=None):
+        user = request.user
+        profile = doctor.objects.filter(user=user).get()
+        profileSerializer = DoctorProfileSerializer(
+            instance=profile, data=request.data.get('profile_data'), partial=True)
+        if profileSerializer.is_valid():
+            profileSerializer.save()
+            return Response({
+                'profile_data':profileSerializer.data
+            }, status=status.HTTP_200_OK)
+        return Response({
+                'profile_data':profileSerializer.errors
             }, status=status.HTTP_400_BAD_REQUEST)
