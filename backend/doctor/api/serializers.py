@@ -20,10 +20,6 @@ class DoctorRegistrationSerializer(serializers.Serializer):
         if password.isdigit() or len(password) < 8:
             raise serializers.ValidationError('Password should contain letters and more 8 characters')
         return password
-    def validate_phone(self, phone):
-        if phone.isdigit()==False:
-            raise serializers.ValidationError('Please Enter a valid mobile number!')
-        return phone
     
     def validate(self, data):
         password=data.get('password')
@@ -38,7 +34,6 @@ class DoctorRegistrationSerializer(serializers.Serializer):
                 email=validated_data['email'],
                 first_name=validated_data['first_name'],
                 last_name=validated_data['last_name'],
-                phone=validated_data["phone"]
             )
         user.set_password(validated_data['password'])
         user.save()
@@ -64,7 +59,7 @@ class DoctorProfileSerializer(serializers.Serializer):
         (Colon_and_Rectal_Surgeons,'Colon and Rectal Surgeons')
     ])
     phone = serializers.CharField(label="Phone", min_length=10)
-    birth_date = serializers.DateField(labels="Birth_date")
+    birth_date = serializers.DateField(label="Birth_date")
     qualification= serializers.ChoiceField(label='Qualification', choices=[ ('PHD','PHD'),
         ('Doctor','Dr'),
         ('Masters','Ms'),
@@ -84,6 +79,7 @@ class DoctorProfileSerializer(serializers.Serializer):
             department=validated_data['department'],
             qualification=validated_data['qualification'],
             phone=validated_data['phone'],
+            birth_date=validated_data['birth_date'],
             user=validated_data['user']
         )
         return new_doctor

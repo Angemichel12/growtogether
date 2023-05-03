@@ -3,5 +3,6 @@ from . import views
 urlpatterns = [
     path('registration/', views.RegistrationView.as_view(), name='api_doctor_registration'),
     path('login/', views.CustomAuthToken.as_view(), name='api_doctor_login'),
+    path('profile/', views.DoctorProfileView.as_view(), name='api_doctor_profile'),
 ]
 

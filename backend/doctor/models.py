@@ -33,7 +33,7 @@ class doctor(models.Model):
     ]
     department = models.CharField(max_length=3, choices=department_choices, default=Obstetrician)
     phone = models.CharField(max_length=10)
-    qualification = models.CharField(max_length=4, choices=qualification_choices, default='A2')
+    qualification = models.CharField(max_length=10, choices=qualification_choices, default='A2')
     birth_date = models.DateField()
     user=models.OneToOneField(User,on_delete=models.CASCADE)
 
@@ -45,6 +45,6 @@ class doctor(models.Model):
         return self.user.id
     @property 
     def get_phone(self):
-        return self.user.phone
+        return self.phone
     def __str__(self):
         return "{} ({})".format(self.user.first_name,self.department)

@@ -36,11 +36,13 @@ request body:
     "first_name": "Dr. Deal",
     "last_name": "Walker",
     "password": "doctoraccess1234",
-    "password2": "doctoraccess1234",
-    "phone": "12312343424"
+    "password2": "doctoraccess1234"
   },
   "profile_data": {
-    "department": "OB"
+    "department": "OB",
+    "phone": "7878787878",
+    "qualification": "A0",
+    "birth_date": "1983-12-03"
   }
 }
 ```
@@ -53,11 +55,13 @@ response body:
     "username": "doctor5",
     "email": "doctor@gmail.com",
     "first_name": "Dr. Deal",
-    "last_name": "Walker",
-    "phone": "12312343424"
+    "last_name": "Walker"
   },
   "profile_data": {
-    "department": "OB"
+    "department": "OB",
+    "phone": "7878787878",
+    "birth_date": "1983-12-03",
+    "qualification": "A0"
   }
 }
 ```
@@ -81,6 +85,59 @@ response body:
 {
   "Message": "You are login successful",
   "token": "c8dabcf01492f84f4db5cafc9003388cdc486cb8"
+}
+```
+
+**GET api/doctor/profile/**
+
+Details: API endpoint for getting doctor profile details. Token authentication required
+
+response body:
+
+```json
+{
+  "user_data": {
+    "username": "doctor5",
+    "email": "doctor@gmail.com",
+    "first_name": "Dr. Deal",
+    "last_name": "Walker"
+  },
+  "profile_data": {
+    "department": "OB",
+    "phone": "7878787878",
+    "birth_date": "1983-12-03",
+    "qualification": "A0"
+  }
+}
+```
+
+**PUT api/doctor/profile/**
+
+Details: API endpoint for updating doctor profile . Token authentication required
+
+request:
+
+```json
+{
+  "profile_data": {
+    "department": "OB",
+    "phone": "7878785656",
+    "birth_date": "1983-12-03",
+    "qualification": "A1"
+  }
+}
+```
+
+response:
+
+```json
+{
+  "profile_data": {
+    "department": "OB",
+    "phone": "7878785656",
+    "birth_date": "1983-12-03",
+    "qualification": "A1"
+  }
 }
 ```
 

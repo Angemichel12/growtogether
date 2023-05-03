@@ -90,3 +90,33 @@ class doctorProfileView(APIView):
         return Response({
                 'profile_data':profileSerializer.errors
             }, status=status.HTTP_400_BAD_REQUEST)
+    
+
+# API endpoint for doctor profile view/update-- only accessble by doctors
+
+class DoctorProfileView(APIView):
+    permission_classes=[IsDoctor]
+    
+    def get(self, request, format=None):
+        user = request.user
+        profile = doctor.objects.filter(user=user).get()
+        userSerializer = DoctorRegistrationSerializer(user)
+        profileSerializer=DoctorProfileSerializer(profile)
+
+        return Response({
+            'user_data':userSerializer.data,
+            'profile_data':profileSerializer.data
+        }, status=status.HTTP_200_OK)
+    
+    def put(self, request, format=None):
+        user = request.user
+        profile = doctor.objects.filter(user=user).get()
+        profileSerializer = DoctorProfileSerializer(instance=profile, data=request.data.get('profile_data'), partial=True)
+        if profileSerializer.is_valid():
+            profileSerializer.save()
+            return Response({
+                'profile_data':profileSerializer.data
+            }, status=status.HTTP_200_OK)
+        return Response({
+            'profile_data':profileSerializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
