@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'receptionist',
     'django_celery_results',
     'django_celery_beat',
+    'rest_framework_swagger',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -141,7 +143,8 @@ REST_FRAMEWORK= {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
        
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 
