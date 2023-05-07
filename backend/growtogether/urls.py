@@ -37,9 +37,9 @@ urlpatterns = [
     path('swagger/schema', schema_view.with_ui('swagger', cache_timeout=0),name="swagger_schema"),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),  
-    path('', include('users.urls')),
-    path('auth/', obtain_auth_token),
-    path('appointment/', include('appointment.urls')),
+    path('api/', include('users.urls')),
+    path('api/auth/', obtain_auth_token),
+    path('api/appointment/', include('appointment.urls')),
     path('api/doctor/', include('doctor.api.urls')),
     path('api/receptionist/', include('receptionist.api.urls')),
 ]
