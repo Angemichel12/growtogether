@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'appointment',
     'doctor',
     'receptionist',
+    'admin',
     'django_celery_results',
     'django_celery_beat',
     'rest_framework_swagger',

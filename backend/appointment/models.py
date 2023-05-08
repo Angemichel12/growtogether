@@ -22,15 +22,31 @@ class SemesterAppointment(models.Model):
     def __str__(self):
         return self.user.username
     
-class Checkup(models.Model): 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chekups")
-    title = models.CharField(max_length=250)
+class Appointment(models.Model):
+    Obstetrician = 'OB'
+    Cardiologist='CL'
+    Dermatologists='DL'
+    Emergency_Medicine_Specialists='EMC'
+    Immunologists='IL'
+    Anesthesiologists='AL'
+    Colon_and_Rectal_Surgeons='CRS'
+
+    department_choices=[(Cardiologist,'Cardiologist'),
+        (Dermatologists,'Dermatologists'),
+        (Obstetrician,'Obstetrician'),
+        (Emergency_Medicine_Specialists,'Emergency Medicine Specialists'),
+        (Immunologists,'Immunologists'),
+        (Anesthesiologists,'Anesthesiologists'),
+        (Colon_and_Rectal_Surgeons,'Colon and Rectal Surgeons')
+    ]
+    date = models.DateField()
+    time = models.TimeField()
     status = models.CharField(choices=[('Pending', 'Pending'), ('Completed', 'Completed')], max_length=10)
-    checkup_date = models.DateField()
-    description = models.TextField()
+    woman = models.ForeignKey(User, on_delete=models.CASCADE, related_name='woman')
+    department = models.CharField(max_length=20, choices=department_choices)
 
     def __str__(self):
-        return self.user.username
+        return "Patient - {} Doc- {} At {} {}".format(self.patient, self.doctor, self.date, self.time)
     
 class Vaccination(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="vaccinations")
