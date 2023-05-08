@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import SemesterAppointment, Checkup, Vaccination
+from .models import SemesterAppointment, Vaccination
 
 
 admin.site.register(SemesterAppointment)
-admin.site.register(Checkup)
 admin.site.register(Vaccination)

@@ -39,9 +39,9 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),  
     path('api/', include('users.urls')),
     path('api/auth/', obtain_auth_token),
-    path('api/appointment/', include('appointment.urls')),
+    path('api/appointment/', include('appointment.api.urls')),
     path('api/doctor/', include('doctor.api.urls')),
     path('api/receptionist/', include('receptionist.api.urls')),
-    path('api/admin/', include('admin.api.urls')),
+    path('api/hospitalAdmin/', include('hospitalAdmin.api.urls')),
 ]
     

@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,14 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=3_q68zs&2gt%tf%4y+(aav++y98nx9@rgeqcwt*ld9($_!8wv'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1','michelnasri.pythonanywhere.com']
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = int(os.environ.get("DEBUG", default=0))
+PRODUCTION = int(os.environ.get("PRODUCTION", default=1))
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,7 +34,7 @@ INSTALLED_APPS = [
     'appointment',
     'doctor',
     'receptionist',
-    'admin',
+    'hospitalAdmin',
     'django_celery_results',
     'django_celery_beat',
     'rest_framework_swagger',
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'growtogether.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('USER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOST'), 
+        'PORT': os.environ.get('PORT')
     }
 }
 
@@ -156,8 +161,8 @@ AUTH_USER_MODEL = 'users.User'
 EMAIL_USE_TLS= True
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT= 587
-EMAIL_HOST_USER= 'classmate2k20@gmail.com'
-EMAIL_HOST_PASSWORD= 'bdybskxyjafqdyhr'
+EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
