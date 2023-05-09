@@ -15,7 +15,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = int(os.environ.get("DEBUG", default=0))
-PRODUCTION = int(os.environ.get("PRODUCTION", default=1))
 ALLOWED_HOSTS = ['*']
 
 
@@ -27,6 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    #cors
+    'corsheaders',
     'django.contrib.staticfiles',
     'users',
     'rest_framework',    
@@ -37,18 +39,19 @@ INSTALLED_APPS = [
     'hospitalAdmin',
     'django_celery_results',
     'django_celery_beat',
-    'rest_framework_swagger',
     'drf_yasg',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'growtogether.urls'
@@ -125,9 +128,7 @@ USE_L10N = True
 
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -178,3 +179,18 @@ CELERY_RESULT_BACKEND = 'django-db'
 
 #CELERY BEAT
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1',
+    'https://growtogether-production.up.railway.app',
+
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://growtogether-production.up.railway.app',
+]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
