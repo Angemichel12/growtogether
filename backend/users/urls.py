@@ -4,7 +4,8 @@ from .views import (UserRegister, VerifyAccount,
                      LoginApi, LogoutApi,
                      ResetPasswordApi,
                     WomanProfileView,
-                     CreateWomenProfileView )
+                     CreateWomenProfileView,
+                      WomanAppointmentViewset )
 
 from rest_framework.routers import DefaultRouter
 
@@ -12,6 +13,7 @@ from rest_framework.routers import DefaultRouter
 
 router= DefaultRouter()
 router.register('users', UserRegister, basename='users')
+router.register('appointment', WomanAppointmentViewset, basename='appointment')
 
 urlpatterns = [ 
             

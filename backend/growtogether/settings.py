@@ -30,15 +30,23 @@ INSTALLED_APPS = [
     #cors
     'corsheaders',
     'django.contrib.staticfiles',
+
+    # Project Apps
     'users',
-    'rest_framework',    
-    'rest_framework.authtoken',
     'appointment',
     'doctor',
     'receptionist',
     'hospitalAdmin',
+
+    #Rest_framework
+    'rest_framework',    
+    'rest_framework.authtoken',
+
+    # Celery
     'django_celery_results',
     'django_celery_beat',
+
+    # Drf_yasg
     'drf_yasg',
 ]
 
@@ -183,7 +191,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1',
+    'http://127.0.0.1:8000',
     'https://growtogether-production.up.railway.app',
 
 ]

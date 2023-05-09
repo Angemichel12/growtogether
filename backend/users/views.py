@@ -2,7 +2,9 @@ from .serializers import (UserRegisterSerializer,
                           ChangePasswordSerializer, 
                           ReadUserSerializer, 
                           WomanProfileSerializer,
-                          WriteProfileSerializer)
+                          WriteProfileSerializer,
+                          ReadAppointmentSerializer,
+                          WriteAppointmentSerializer)
 from django.contrib.auth import get_user_model, authenticate
 from .utils import Util
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -18,6 +20,7 @@ from rest_framework import permissions, status, generics, viewsets
 from rest_framework.views import APIView
 from auto_tasks.auto_generate import auto_username_password_generator
 from .models import User, Woman
+from appointment.models import Appointment
 
 from rest_framework.authtoken.models import Token
 
@@ -201,3 +204,11 @@ class CreateWomenProfileView(APIView):
             data['user'] = user_profile.user.username
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class WomanAppointmentViewset(viewsets.ModelViewSet):
+    def get_queryset(self):
+        return Appointment.objects.filter(woman=self.request.user)
+    def get_serializer_class(self):
+        if self.action in ('list', 'retrieve'):
+            return ReadAppointmentSerializer
+        return WriteAppointmentSerializer

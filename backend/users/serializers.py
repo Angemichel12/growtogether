@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 from .models import Woman
+from appointment.models import Appointment
 
 
 UserModel = get_user_model()
@@ -75,6 +76,18 @@ class WriteProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Woman
         fields = ['birth_date', 'phone', 'user']
+	
+class ReadAppointmentSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Appointment
+		fields = ('id','date', 'time', 'status', 'department')
+
+class WriteAppointmentSerializer(serializers.ModelSerializer):
+	woman = serializers.HiddenField(default=serializers.CurrentUserDefault())
+	class Meta:
+		model = Appointment
+		fields = ('date', 'time', 'status', 'department','woman')
+
 		
 		
         
