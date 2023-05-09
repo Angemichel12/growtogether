@@ -4,7 +4,9 @@ from .serializers import (UserRegisterSerializer,
                           WomanProfileSerializer,
                           WriteProfileSerializer,
                           ReadAppointmentSerializer,
-                          WriteAppointmentSerializer)
+                          WriteAppointmentSerializer,
+                          ReadSemesterAppointmentSerializer,
+                          ReadVaccinationSerializer)
 from django.contrib.auth import get_user_model, authenticate
 from .utils import Util
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -20,9 +22,10 @@ from rest_framework import permissions, status, generics, viewsets
 from rest_framework.views import APIView
 from auto_tasks.auto_generate import auto_username_password_generator
 from .models import User, Woman
-from appointment.models import Appointment
+from appointment.models import (Appointment, SemesterAppointment, Vaccination)
 
 from rest_framework.authtoken.models import Token
+from django.http import Http404
 
 UserModel= get_user_model()
 
@@ -212,3 +215,14 @@ class WomanAppointmentViewset(viewsets.ModelViewSet):
         if self.action in ('list', 'retrieve'):
             return ReadAppointmentSerializer
         return WriteAppointmentSerializer
+    
+class SemesterAppointmentAPIView(generics.ListAPIView):
+    serializer_class = ReadSemesterAppointmentSerializer
+    def get_queryset(self):
+        return SemesterAppointment.objects.filter(user=self.request.user)
+    
+class VaccinationAPIView(generics.ListAPIView):
+    serializer_class=ReadVaccinationSerializer
+
+    def get_queryset(self):
+        return Vaccination.objects.filter(user=self.request.user)

@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 from .models import Woman
-from appointment.models import Appointment
+from appointment.models import (Appointment, SemesterAppointment, Vaccination)
+
 
 
 UserModel = get_user_model()
@@ -87,6 +88,17 @@ class WriteAppointmentSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Appointment
 		fields = ('date', 'time', 'status', 'department','woman')
+
+class ReadSemesterAppointmentSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = SemesterAppointment
+		fields = ('semester', 'test_date', 'utelas_height','children_situation','appointment_date','status','description')
+
+
+class ReadVaccinationSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Vaccination
+		fields = ('name','date_to','description')
 
 		
 		

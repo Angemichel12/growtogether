@@ -5,7 +5,9 @@ from .views import (UserRegister, VerifyAccount,
                      ResetPasswordApi,
                     WomanProfileView,
                      CreateWomenProfileView,
-                      WomanAppointmentViewset )
+                      WomanAppointmentViewset,
+                       SemesterAppointmentAPIView,
+                        VaccinationAPIView )
 
 from rest_framework.routers import DefaultRouter
 
@@ -28,6 +30,12 @@ urlpatterns = [
     #changing password not working on confirming passwd field      
     path('changepassword/', ChangePasswordApi.as_view(), name='changepassword'),
     path('resetpassword/', ResetPasswordApi.as_view(), name='resetpassword'), 
-    
+
+
+    # Semester Appointment urls
+    path('semester/', SemesterAppointmentAPIView.as_view()),
+
+    # Vaccination urls
+    path('vaccination/', VaccinationAPIView.as_view())
     
 ]
