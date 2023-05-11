@@ -20,13 +20,13 @@ from auto_tasks.auto_generate import auto_username_password_generator
 from rest_framework.authtoken.models import Token
 
 
-UserModel= get_user_model()
+User= get_user_model()
 
 # Create your views here.
 
 
 class UserRegister(viewsets.ViewSet):
-    permission_classes = [IsAdminUser, IsAuthenticated]
+    permission_classes = []
 
     def list(self, request):
         all_users= User.objects.all()
@@ -131,7 +131,7 @@ class LogoutApi(APIView):
     
         
 class ChangePasswordApi(generics.UpdateAPIView):
-    model= UserModel
+    model= User
     serializer_class= ChangePasswordSerializer
     permission_classes= [IsAuthenticated, ]    
         

@@ -33,14 +33,12 @@ INSTALLED_APPS = [
 
     # Project Apps
     'users',
+    'doctors',
 
     #Rest_framework
     'rest_framework',    
     'rest_framework.authtoken',
 
-    # Celery
-    'django_celery_results',
-    'django_celery_beat',
 
     # Drf_yasg
     'drf_yasg',
@@ -175,7 +173,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000',
+    'http://127.0.0.1:',
     'https://growtogether-production.up.railway.app',
 
 ]
