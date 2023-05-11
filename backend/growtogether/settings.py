@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,14 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=3_q68zs&2gt%tf%4y+(aav++y98nx9@rgeqcwt*ld9($_!8wv'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1','michelnasri.pythonanywhere.com']
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = int(os.environ.get("DEBUG", default=0))
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -26,27 +26,40 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    #cors
+    'corsheaders',
     'django.contrib.staticfiles',
+
+    # Project Apps
     'users',
-    'rest_framework',    
-    'rest_framework.authtoken',
     'appointment',
     'doctor',
     'receptionist',
+    'hospitalAdmin',
+
+    #Rest_framework
+    'rest_framework',    
+    'rest_framework.authtoken',
+
+    # Celery
     'django_celery_results',
     'django_celery_beat',
-    'rest_framework_swagger',
+
+    # Drf_yasg
     'drf_yasg',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'growtogether.urls'
@@ -75,8 +88,12 @@ WSGI_APPLICATION = 'growtogether.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('USER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOST'), 
+        'PORT': os.environ.get('PORT')
     }
 }
 
@@ -119,9 +136,7 @@ USE_L10N = True
 
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -155,8 +170,8 @@ AUTH_USER_MODEL = 'users.User'
 EMAIL_USE_TLS= True
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT= 587
-EMAIL_HOST_USER= 'classmate2k20@gmail.com'
-EMAIL_HOST_PASSWORD= 'bdybskxyjafqdyhr'
+EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -172,3 +187,18 @@ CELERY_RESULT_BACKEND = 'django-db'
 
 #CELERY BEAT
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'https://growtogether-production.up.railway.app',
+
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://growtogether-production.up.railway.app',
+]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
