@@ -6,6 +6,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from doctor.models import doctor
 from .permissions import IsDoctor
+from rest_framework.permissions import AllowAny
 
 
 # API endpoint for Doctor Login
@@ -42,7 +43,7 @@ class CustomAuthToken(ObtainAuthToken):
 
 # API endpoint for Doctor Registration
 class RegistrationView(APIView):
-    permission_classes=[]
+    permission_classes=[AllowAny,]
     def post(self,request,format=None):
         registrationSerializer = DoctorRegistrationSerializer(data=request.data.get('user_data'))
         profileSerializer = DoctorProfileSerializer(data=request.data.get('profile_data'))
