@@ -1,12 +1,7 @@
 from .serializers import (UserRegisterSerializer, 
                           ChangePasswordSerializer, 
-                          ReadUserSerializer, 
-                          WomanProfileSerializer,
-                          WriteProfileSerializer,
-                          ReadAppointmentSerializer,
-                          WriteAppointmentSerializer,
-                          ReadSemesterAppointmentSerializer,
-                          ReadVaccinationSerializer)
+                          ReadUserSerializer
+)
 from django.contrib.auth import get_user_model, authenticate
 from .utils import Util
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -21,11 +16,9 @@ from rest_framework.response import Response
 from rest_framework import permissions, status, generics, viewsets
 from rest_framework.views import APIView
 from auto_tasks.auto_generate import auto_username_password_generator
-from .models import User, Woman
-from appointment.models import (Appointment, SemesterAppointment, Vaccination)
 
 from rest_framework.authtoken.models import Token
-from django.http import Http404
+
 
 UserModel= get_user_model()
 
@@ -34,12 +27,12 @@ UserModel= get_user_model()
 
 class UserRegister(viewsets.ViewSet):
     permission_classes = [IsAdminUser, IsAuthenticated]
-    
+
     def list(self, request):
         all_users= User.objects.all()
         serializer= ReadUserSerializer(all_users, many= True) 
         return Response(serializer.data)
-        
+  
     def post(self, request):
         if User.is_receptionist or User.is_HR:
                         
@@ -168,61 +161,3 @@ class ResetPasswordApi(APIView):
     pass
 
 
-class WomanProfileView(APIView):
-    """"API endpoint for Woman profile view/update-- Only accessble by patients"""
-    permission_classes = [IsAuthenticated]
-
-
-    def get(self, request, format=None):
-        user = request.user
-        profile = Woman.objects.filter(user=user).get()
-        userSerializer=UserRegisterSerializer(user)
-        profileSerializer = WomanProfileSerializer(profile)
-        return Response({
-            'user_data':userSerializer.data,
-            'profile_data':profileSerializer.data
-
-        }, status=status.HTTP_200_OK)
-
-    def put(self, request, format=None):
-        user = request.user
-        profile = Woman.objects.filter(user=user).get()
-        profileSerializer = WomanProfileSerializer(
-            instance=profile, data=request.data.get('profile_data'), partial=True)
-        if profileSerializer.is_valid():
-            profileSerializer.save()
-            return Response({
-                'profile_data':profileSerializer.data
-            }, status=status.HTTP_200_OK)
-        return Response({
-                'profile_data':profileSerializer.errors
-            }, status=status.HTTP_400_BAD_REQUEST)
-    
-class CreateWomenProfileView(APIView):
-    def post(self, request, format=None):
-        serializer = WriteProfileSerializer(data=request.data ,context={'request': request})
-        if serializer.is_valid():
-            user_profile= serializer.save(user=request.user)
-            data = serializer.data
-            data['user'] = user_profile.user.username
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-class WomanAppointmentViewset(viewsets.ModelViewSet):
-    def get_queryset(self):
-        return Appointment.objects.filter(woman=self.request.user)
-    def get_serializer_class(self):
-        if self.action in ('list', 'retrieve'):
-            return ReadAppointmentSerializer
-        return WriteAppointmentSerializer
-    
-class SemesterAppointmentAPIView(generics.ListAPIView):
-    serializer_class = ReadSemesterAppointmentSerializer
-    def get_queryset(self):
-        return SemesterAppointment.objects.filter(user=self.request.user)
-    
-class VaccinationAPIView(generics.ListAPIView):
-    serializer_class=ReadVaccinationSerializer
-
-    def get_queryset(self):
-        return Vaccination.objects.filter(user=self.request.user)
