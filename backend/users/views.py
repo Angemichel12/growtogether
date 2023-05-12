@@ -29,7 +29,6 @@ User= get_user_model()
 class UserRegister(viewsets.ViewSet):
     permission_classes = []
     @swagger_auto_schema(
-        request_body=ReadUserSerializer,
         tags=['user action'],
         operation_description='List of all user in system',
 
@@ -107,6 +106,13 @@ class VerifyAccount(generics.GenericAPIView):
 
 class LoginApi(APIView):
     permission_classes= [AllowAny, ]
+
+    permission_classes = []
+    @swagger_auto_schema(
+        tags=['user action'],
+        operation_description='user Login in system',
+
+    )
             
     def post(self, request):
         username= request.data.get('username')
@@ -125,7 +131,12 @@ class LoginApi(APIView):
                 return Response(data= {'Message':'Account is not allowed'}, status= status.HTTP_401_UNAUTHORIZED)
         else:
             return Response(data= {'Message':'Invalid credentials'},status= status.HTTP_401_UNAUTHORIZED)
-         
+    permission_classes = []
+
+    @swagger_auto_schema(
+        tags=['user action'],
+
+    )   
     def get(self, request):
         content= {'user': str(request.user), 'auth':str(request.auth)}
         return Response(data= content, status= status.HTTP_200_OK)
@@ -133,10 +144,22 @@ class LoginApi(APIView):
 class LogoutApi(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes= [TokenAuthentication]
+
+    permission_classes = []
+    @swagger_auto_schema(
+        tags=['user action'],
+
+    )
     
     def get(self, request):
         content= {'user': str(request.user), 'auth':str(request.auth)}
         return Response(data= content, status= status.HTTP_200_OK)
+    
+
+    @swagger_auto_schema(
+        tags=['user action'],
+
+    )
         
     def post(self, request, format=None):
         request.auth.delete()
