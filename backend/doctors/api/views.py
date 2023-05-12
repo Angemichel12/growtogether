@@ -6,6 +6,7 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from auto_tasks.auto_generate import fullname_generator
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -22,14 +23,14 @@ class CustomAuthToken(ObtainAuthToken):
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        if user.user_type != True:
+        if user.is_staff != True:
             return Response(
                 {
                     'message': "Your account is not approved by admin yet!"
                 },
                 status=status.HTTP_403_FORBIDDEN
             )
-        elif user.is_staff==False:
+        elif user.user_type == False:
             return Response(
                 {
                     'message': "You are not authorised to login as a doctor"
@@ -51,7 +52,9 @@ class DoctorsAPIView(APIView):
 
     )
     def post(self, request, format=None):
-        serializer = RegisterDoctorSerializer(data=request.data)
+        clear_data = request.data
+        clear_data=fullname_generator(clear_data)
+        serializer = RegisterDoctorSerializer(data=clear_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=201)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

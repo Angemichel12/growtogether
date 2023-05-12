@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 USER_CHOICES = [
+
     ('D', 'Doctor'),
     ('W', 'Woman'),
     ('R', 'Receptionist'),
@@ -11,7 +12,7 @@ USER_CHOICES = [
     ('C', 'Consultator')
 ]
 class User(AbstractUser):
-    user_type = models.CharField(max_length=3, choices=USER_CHOICES, default='O')
+    user_type = models.CharField(max_length=3, choices=USER_CHOICES, default='W')
     birth_date = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=13, null=True, blank=True)
             

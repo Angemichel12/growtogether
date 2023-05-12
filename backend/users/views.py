@@ -18,6 +18,7 @@ from rest_framework.views import APIView
 from auto_tasks.auto_generate import auto_username_password_generator
 
 from rest_framework.authtoken.models import Token
+from drf_yasg.utils import swagger_auto_schema
 
 
 User= get_user_model()
@@ -27,14 +28,26 @@ User= get_user_model()
 
 class UserRegister(viewsets.ViewSet):
     permission_classes = []
+    @swagger_auto_schema(
+        request_body=ReadUserSerializer,
+        tags=['user action'],
+        operation_description='List of all user in system',
 
+    )
     def list(self, request):
-        all_users= User.objects.all()
+        all_users= User.objects.filter(user_type='W')
         serializer= ReadUserSerializer(all_users, many= True) 
         return Response(serializer.data)
+    
+    @swagger_auto_schema(
+        request_body=UserRegisterSerializer,
+        tags=['user action'],
+        operation_description='This help to register Women',
+
+    )
   
     def post(self, request):
-        if User.is_receptionist or User.is_HR:
+        if User.is_doctor:
                         
             clean_data = auto_username_password_generator(request.data)
             serializer = UserRegisterSerializer(data=clean_data)
