@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
@@ -33,18 +33,12 @@ INSTALLED_APPS = [
 
     # Project Apps
     'users',
-    'appointment',
-    'doctor',
-    'receptionist',
-    'hospitalAdmin',
+    'doctors',
 
     #Rest_framework
     'rest_framework',    
     'rest_framework.authtoken',
 
-    # Celery
-    'django_celery_results',
-    'django_celery_beat',
 
     # Drf_yasg
     'drf_yasg',
@@ -177,21 +171,9 @@ EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
-# Celery settings
-
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = 'django-db'
-
-#CELERY BEAT
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-
-
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000',
+    'http://127.0.0.1:',
     'https://growtogether-production.up.railway.app',
 
 ]
