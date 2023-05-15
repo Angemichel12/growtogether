@@ -7,7 +7,9 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from auto_tasks.auto_generate import fullname_generator
-from rest_framework import permissions, authentication
+from rest_framework.decorators import api_view, permission_classes
+from django.contrib.auth import logout
+from rest_framework.permissions import IsAuthenticated
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -43,6 +45,16 @@ class CustomAuthToken(ObtainAuthToken):
             return Response({
                 'token': token.key
             },status=status.HTTP_200_OK)
+        
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def User_logout(request):
+
+    request.user.auth_token.delete()
+
+    logout(request)
+
+    return Response('User Logged out successfully')
         
 
 

@@ -14,8 +14,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-
-DEBUG = False
 ALLOWED_HOSTS = [
     '*',
     'http://localhost:3000',
@@ -28,10 +26,9 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://127.0.0.1:',
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # Add your frontend URL here
     'https://growtogether-production.up.railway.app',
-    'http://localhost:3000',
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
