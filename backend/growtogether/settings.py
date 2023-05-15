@@ -175,6 +175,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:',
     'https://growtogether-production.up.railway.app',
+    'http://localhost:3000',
 
 ]
 
