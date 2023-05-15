@@ -7,6 +7,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from auto_tasks.auto_generate import fullname_generator
+from rest_framework import permissions, authentication
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -42,6 +43,7 @@ class CustomAuthToken(ObtainAuthToken):
             return Response({
                 'token': token.key
             },status=status.HTTP_200_OK)
+        
 
 
 class DoctorsAPIView(APIView):
