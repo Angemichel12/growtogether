@@ -14,24 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-ALLOWED_HOSTS = [
-    '*',
-    'http://localhost:3000',
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://growtogether-production.up.railway.app',
-    'http://localhost:3000',
-]
-
-
-CORS_ORIGIN_WHITELIST = (
-    'https://growtogether-production.up.railway.app',
-    'http://localhost:3000',
-)
-
-# CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ALLOW_CREDENTIALS = True
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -188,3 +171,19 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://growtogether-production.up.railway.app',
+    'http://localhost:3000',
+]
+
+
+CORS_ORIGIN_WHITELIST = [
+    'https://growtogether-production.up.railway.app',
+    'http://localhost:3000',
+]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+SECURE_SCHEMES = ['https', 'http']
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
