@@ -17,19 +17,19 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = True
 ALLOWED_HOSTS = [
     '*',
-    'localhost:3000',
+    'http://localhost:3000',
 ]
 
 
 CSRF_TRUSTED_ORIGINS = [
     'https://growtogether-production.up.railway.app',
-    'localhost:3000',
+    'http://localhost:3000',
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    '127.0.0.1:',
+    'http://127.0.0.1:',
     'https://growtogether-production.up.railway.app',
-    'localhost:3000',
+    'http://localhost:3000',
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
