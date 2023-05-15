@@ -20,16 +20,16 @@ ALLOWED_HOSTS = [
     'http://localhost:3000',
 ]
 
-
 CSRF_TRUSTED_ORIGINS = [
     'https://growtogether-production.up.railway.app',
     'http://localhost:3000',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # Add your frontend URL here
+
+CORS_ORIGIN_WHITELIST = (
     'https://growtogether-production.up.railway.app',
-]
+    'http://localhost:3000',
+)
 
 # CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOW_CREDENTIALS = True
@@ -63,9 +63,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # cors headers middleware
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "corsheaders.middleware.CorsPostCsrfMiddleware", # cors
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
