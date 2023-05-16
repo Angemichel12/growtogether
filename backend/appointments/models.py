@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class Appointment(models.Modle):
+class Appointment(models.Model):
     class Status(models.TextChoices):
         PENDING = 'Pending', 'PD'
         ACCEPTED = 'Accepted', 'AC'
