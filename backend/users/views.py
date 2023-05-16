@@ -121,12 +121,14 @@ class LoginApi(APIView):
         
         if user:
             if user.is_active:
-                token, created= Token.objects.get_or_create(user= user)
-                response= {
+                if user.user_type == "W":
+                    token, created= Token.objects.get_or_create(user= user)
+                    response= {
                     'Message':'Logged in successfully',
                     'Token': token.key
                 }
-                return Response(data= response)
+                    return Response(data= response)
+                return Response(data= {'Message':'You are not allowed to Login as Woman'},status= status.HTTP_401_UNAUTHORIZED)
             else:
                 return Response(data= {'Message':'Account is not allowed'}, status= status.HTTP_401_UNAUTHORIZED)
         else:
