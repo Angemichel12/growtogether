@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     # Project Apps
     'users',
     'doctors',
-    'appointments'
+    'appointments',
 
     #Rest_framework
     'rest_framework',    
