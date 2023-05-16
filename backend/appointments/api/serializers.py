@@ -7,3 +7,8 @@ class WriteAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
         fields = ('appointment_date', 'reason','user')
+
+class ReadAppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = ('appointment_date', 'reason','status')
