@@ -10,7 +10,7 @@ class Appointment(models.Model):
         ACCEPTED = 'Accepted', 'AC'
     appointment_date = models.DateField()
     reason = models.TextField()
-    status = models.CharField(max_length=2, choices=Status.choices, default=Status.PENDING)
+    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments')
 
     def __str__(self):
