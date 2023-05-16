@@ -26,22 +26,23 @@ User= get_user_model()
 # Create your views here.
 
 
-class UserRegister(viewsets.ViewSet):
+class UserRegister(APIView):
     permission_classes = []
     @swagger_auto_schema(
         tags=['user action'],
         operation_description='List of all user in system',
 
     )
-    def list(self, request):
+    def get(self, request):
         all_users= User.objects.filter(user_type='W')
         serializer= ReadUserSerializer(all_users, many= True) 
         return Response(serializer.data)
     
     @swagger_auto_schema(
-        request_body=UserRegisterSerializer,
+        
         tags=['user action'],
         operation_description='This help to register Women',
+        request_body=UserRegisterSerializer,
 
     )
   

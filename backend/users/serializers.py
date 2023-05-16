@@ -32,7 +32,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                                       last_name = clean_data['last_name'],
 				      				is_active = False,
 								      user_type= 'W'
-				      )		  
+				      )
 		return user_obj
 class ReadUserSerializer(serializers.ModelSerializer):
 	class Meta:
