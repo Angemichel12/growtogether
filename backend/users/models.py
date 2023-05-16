@@ -9,10 +9,10 @@ USER_CHOICES = [
     ('W', 'Woman'),
     ('R', 'Receptionist'),
     ('HR', 'HR'),
-    ('C', 'Consultator')
+    ('O', 'Ordinary')
 ]
 class User(AbstractUser):
-    user_type = models.CharField(max_length=3, choices=USER_CHOICES, default='W')
+    user_type = models.CharField(max_length=3, choices=USER_CHOICES, default='O')
     birth_date = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=13, null=True, blank=True)
             

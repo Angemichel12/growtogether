@@ -17,6 +17,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 		model = UserModel
 		fields = ['email','password', 'first_name','last_name','username','is_active']
 
+	def validate_email(self, email):
+		if UserModel.objects.filter(email=email).exists():
+			raise serializers.ValidationError("This email is already in use.")
+		return email
+
   
 	def create(self, clean_data):
      
@@ -25,7 +30,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                                       username = clean_data['username'], 
                                       first_name = clean_data['first_name'],
                                       last_name = clean_data['last_name'],
-				      				is_active = False
+				      				is_active = False,
+								      user_type= 'W'
 				      )		  
 		return user_obj
 class ReadUserSerializer(serializers.ModelSerializer):
