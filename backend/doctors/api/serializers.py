@@ -13,12 +13,13 @@ class RegisterDoctorSerializer(serializers.ModelSerializer):
         
     def create(self, clean_data):
         doctor = User.objects.create(email=clean_data['email'],
-                                      password= make_password(clean_data['password']),
                                       username = clean_data['username'], 
                                       first_name = clean_data['first_name'],
                                       last_name = clean_data['last_name'],
 				      				is_active = False,
                                       is_staff = True
 				      )
+        doctor.set_password(clean_data['password'])
+        doctor.save()
         return doctor
         

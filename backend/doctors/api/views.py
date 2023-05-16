@@ -45,7 +45,7 @@ class CustomAuthToken(ObtainAuthToken):
                 },
                 status=status.HTTP_403_FORBIDDEN
             )
-        elif user.user_type == False:
+        elif user.user_type != "D":
             return Response(
                 {
                     'message': "You are not authorised to login as a doctor"
@@ -85,8 +85,6 @@ class DoctorsAPIView(APIView):
 
         if password and confirm_password and password != confirm_password:
             return Response({"error": "Passwords do not match."}, status=status.HTTP_400_BAD_REQUEST)
-
-        clear_data['password']= make_password(clear_data['password'])
         serializer = RegisterDoctorSerializer(data=clear_data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -105,6 +103,10 @@ class DoctorsAPIView(APIView):
         
         return Response(status=status.HTTP_400_BAD_REQUEST)
 class VerifyAccount(generics.GenericAPIView):
+    @swagger_auto_schema(
+        tags=['doctor action'],
+
+    )
     def get(self, request):
         token= request.GET.get('token') 
         
