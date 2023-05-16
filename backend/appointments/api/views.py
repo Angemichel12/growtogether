@@ -8,22 +8,21 @@ from rest_framework.permissions import IsAuthenticated
 from .permissions import IsPatient
 from drf_yasg.utils import swagger_auto_schema
 
+
 class UserAppointmentAPIView(APIView):
     permission_classes = [IsAuthenticated, IsPatient]
 
     @swagger_auto_schema(
-        
+
         tags=['user action'],
         operation_summary='User_appointments',
         operation_description='User get all assigned appointments'
 
     )
-
     def get(self, request, format=None):
         appointments = Appointment.objects.filter(user=request.user)
         serializer = ReadAppointmentSerializer(appointments, many=True)
         return Response(serializer.data)
-
 
     @swagger_auto_schema(
         request_body=WriteAppointmentSerializer,
@@ -39,14 +38,14 @@ class UserAppointmentAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
     def get_object(self, pk):
         try:
             return Appointment.objects.get(pk=pk)
         except Appointment.DoesNotExist:
             raise Http404
+
     @swagger_auto_schema(
-        
+
         tags=['user action'],
         operation_summary='appointment_detail',
         operation_description='User detail of appointment'
@@ -56,7 +55,7 @@ class UserAppointmentAPIView(APIView):
         appointment = self.get_object(pk)
         serializer = ReadAppointmentSerializer(appointment)
         return Response(serializer.data)
-    
+
     @swagger_auto_schema(
         request_body=WriteAppointmentSerializer,
         tags=['user action'],
@@ -64,7 +63,6 @@ class UserAppointmentAPIView(APIView):
         operation_description='User update appointment'
 
     )
-
     def put(self, request, pk, format=None):
         appointment = self.get_object(pk)
         serializer = WriteAppointmentSerializer(appointment, data=request.data)
@@ -74,13 +72,13 @@ class UserAppointmentAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
-        
+
         tags=['user action'],
         operation_summary='User_delete_appointments',
         operation_description='User  delete assigned appointments'
 
     )
     def delete(self, request, pk, format=None):
-        appointment= self.get_object(pk)
+        appointment = self.get_object(pk)
         appointment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
