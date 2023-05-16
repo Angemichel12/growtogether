@@ -5,9 +5,10 @@ from rest_framework import status
 from appointments.models import Appointment
 from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsPatient
 
 class UserAppointmentAPIView(APIView):
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [IsAuthenticated, IsPatient]
 
     def get(self, request, format=None):
         appointments = Appointment.objects.filter(user=request.user)
