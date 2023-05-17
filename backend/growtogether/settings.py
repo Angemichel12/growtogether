@@ -41,6 +41,9 @@ INSTALLED_APPS = [
 
     # Drf_yasg
     'drf_yasg',
+
+    # celery
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
