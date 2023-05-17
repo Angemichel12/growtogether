@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.UserAppointmentAPIView.as_view(), name='user_appointmens'),
+    path('test/', views.test, name='test'),
 ]

@@ -7,6 +7,7 @@ from django.http import Http404
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsPatient
 from drf_yasg.utils import swagger_auto_schema
+from appointments.tasks import send_email_func
 
 
 class UserAppointmentAPIView(APIView):
@@ -82,3 +83,7 @@ class UserAppointmentAPIView(APIView):
         appointment = self.get_object(pk)
         appointment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+def test(request):
+    send_email_func.delay()
+    return Response("Message: Done")
