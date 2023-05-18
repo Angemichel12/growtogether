@@ -11,7 +11,6 @@ from appointments.tasks import send_email_func
 
 
 class UserAppointmentAPIView(APIView):
-    permission_classes = [IsAuthenticated, IsPatient]
 
     @swagger_auto_schema(
 
@@ -21,7 +20,7 @@ class UserAppointmentAPIView(APIView):
 
     )
     def get(self, request, format=None):
-        appointments = Appointment.objects.filter(user=request.user)
+        appointments = Appointment.objects.all()
         serializer = ReadAppointmentSerializer(appointments, many=True)
         return Response(serializer.data)
 
