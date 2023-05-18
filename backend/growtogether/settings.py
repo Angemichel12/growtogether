@@ -12,7 +12,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 
-
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ALLOWED_HOSTS = ['*']
 
@@ -25,7 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 
-    #cors
+    # cors
     'corsheaders',
     'django.contrib.staticfiles',
 
@@ -34,22 +33,27 @@ INSTALLED_APPS = [
     'doctors',
     'appointments',
 
-    #Rest_framework
-    'rest_framework',    
+    # Rest_framework
+    'rest_framework',
     'rest_framework.authtoken',
 
 
     # Drf_yasg
     'drf_yasg',
+
+    # celery
+    'celery',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # cors headers middleware
+    'corsheaders.middleware.CorsMiddleware',  # cors headers middleware
     'django.middleware.common.CommonMiddleware',
     "django.middleware.csrf.CsrfViewMiddleware",
-    "corsheaders.middleware.CorsPostCsrfMiddleware", # cors
+    "corsheaders.middleware.CorsPostCsrfMiddleware",  # cors
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'growtogether.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,7 +90,7 @@ DATABASES = {
         'NAME': os.environ.get('NAME'),
         'USER': os.environ.get('USER'),
         'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': os.environ.get('HOST'), 
+        'HOST': os.environ.get('HOST'),
         'PORT': os.environ.get('PORT')
     }
 }
@@ -132,7 +136,7 @@ USE_L10N = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -144,14 +148,14 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-REST_FRAMEWORK= {
+REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES':[],
-    
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-       
+
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
@@ -161,15 +165,14 @@ AUTH_USER_MODEL = 'users.User'
 
 # Email settings
 
-EMAIL_USE_TLS= True
-EMAIL_HOST= 'smtp.gmail.com'
-EMAIL_PORT= 587
-EMAIL_HOST_USER= os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 
 CSRF_TRUSTED_ORIGINS = [
@@ -188,3 +191,17 @@ CORS_ALLOW_CREDENTIALS = True
 SECURE_SCHEMES = ['https', 'http']
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+# Celery Configuration Options
+
+CELERY_BROKER_URL = os.getenv('REDIS_URL')
+CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Kigali'
+
+# Celery Beat
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

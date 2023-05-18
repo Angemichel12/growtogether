@@ -1,1 +1,3 @@
-web: gunicorn growtogether.wsgi --log-file -
+web: gunicorn growtogether.wsgi --bind 0.0.0.0:$PORT
+worker: celery -A growtogether worker --loglevel=info
+beat: celery -A growtogether beat --loglevel=info
