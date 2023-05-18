@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password
 
 
 User = get_user_model()
@@ -21,7 +20,8 @@ class RegisterDoctorSerializer(serializers.ModelSerializer):
                                       first_name = clean_data['first_name'],
                                       last_name = clean_data['last_name'],
 				      				is_active = False,
-                                      is_staff = True
+                                      is_staff = True,
+                                      user_type = 'D'
 				      )
         doctor.set_password(clean_data['password'])
         doctor.save()
