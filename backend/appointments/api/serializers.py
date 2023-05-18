@@ -3,10 +3,9 @@ from appointments.models import Appointment
 
 
 class WriteAppointmentSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Appointment
-        fields = ('appointment_date', 'reason','user')
+        fields = ('appointment_date', 'reason')
 
 class ReadAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
