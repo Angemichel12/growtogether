@@ -10,4 +10,4 @@ class WriteAppointmentSerializer(serializers.ModelSerializer):
 class ReadAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
-        fields = ('appointment_date', 'reason','status')
+        fields = ('id','appointment_date', 'reason','status')
