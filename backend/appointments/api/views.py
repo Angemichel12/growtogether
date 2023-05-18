@@ -11,6 +11,7 @@ from appointments.tasks import send_email_func
 
 
 class UserAppointmentAPIView(APIView):
+    permission_classes = [IsAuthenticated, IsPatient]
 
     @swagger_auto_schema(
 
